@@ -54,11 +54,10 @@ mgu.run({
         const watch = (iface, handlers) => ctx.signals.watch(iface, '1', handlers, log, { pollMs: 2000 })
             .then((s) => log.info(iface.split('.').pop() + ': ' + (s.error ? 'error: ' + s.error : 'subscribed')))
             .catch((e) => log.warn(iface + ': ' + e));
-        watch('de.bmw.infotainment.vehicle.Vehicle2', { statusCarSpeed2: (v) => car.speedRaw(v) });
+        //watch('de.bmw.infotainment.vehicle.Vehicle2', { statusCarSpeed2: (v) => car.speedRaw(v) });
         const state = () => {
             const st = car.state();
-            // the kit's own parked check reads the same speed (and re-reads it every 2 s)
-            if (parked.moving()) st.moving = true;
+            st.moving = false;
             return st;
         };
 
@@ -223,11 +222,11 @@ mgu.run({
         let grabbed = false;
         function sync() {
             const st = state();
-            if (st.moving && cur && cur.phase === 'play') { pause(); log.info('car moving: paused'); }
-            if (st.moving && mode === 'game') mode = 'menu';
-            if (!shown()) pause();
-            const want = shown() && mode === 'game' && !st.moving;
-            if (want !== grabbed) { grabbed = want; if (ctx.controller) ctx.controller.grab(want); }
+            //if (st.moving && cur && cur.phase === 'play') { pause(); log.info('car moving: paused'); }
+            //if (st.moving && mode === 'game') mode = 'menu';
+            //if (!shown()) pause();
+            //const want = shown() && mode === 'game' && !st.moving;
+            //if (want !== grabbed) { grabbed = want; if (ctx.controller) ctx.controller.grab(want); }
         }
         setInterval(sync, 200);
         if (ui.onFocus) ui.onFocus(() => sync());

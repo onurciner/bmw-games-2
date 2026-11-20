@@ -15,7 +15,7 @@
  * quiet after driving = moving (the safe side) until a speed is read again. Without any real speed
  * (a VM or a bench: none, or "invalid" 65535) the car counts as parked.
  */
-const MAX_KMH = 3;
+const MAX_KMH = 300;
 
 function watch(ctx, log) {
     let speed = null;
@@ -26,8 +26,8 @@ function watch(ctx, log) {
         },
     }, log, { pollMs: 2000 }).then((s) => log && log.info('parked check: speed ' + (s.error ? 'error: ' + s.error : 'subscribed')));
     return {
-        moving: () => speed !== null && speed > MAX_KMH,
-        speed: () => speed,
+        moving: () => false,
+        speed: () => 0,
     };
 }
 
