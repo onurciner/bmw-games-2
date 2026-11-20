@@ -224,9 +224,9 @@ mgu.run({
             const st = state();
             //if (st.moving && cur && cur.phase === 'play') { pause(); log.info('car moving: paused'); }
             //if (st.moving && mode === 'game') mode = 'menu';
-            //if (!shown()) pause();
-            //const want = shown() && mode === 'game' && !st.moving;
-            //if (want !== grabbed) { grabbed = want; if (ctx.controller) ctx.controller.grab(want); }
+            if (!shown()) pause();
+            const want = shown() && mode === 'game';
+            if (want !== grabbed) { grabbed = want; if (ctx.controller) ctx.controller.grab(want); }
         }
         setInterval(sync, 200);
         if (ui.onFocus) ui.onFocus(() => sync());
